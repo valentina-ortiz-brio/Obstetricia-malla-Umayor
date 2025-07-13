@@ -1,60 +1,55 @@
 body {
-  background-color: #fdf3f7;
+  background-color: #fff0f5;
   font-family: 'Segoe UI', sans-serif;
-  color: #4a0c40;
   margin: 0;
   padding: 0;
   text-align: center;
 }
 
 h1 {
-  margin: 20px;
-  color: #c2185b;
-  font-size: 26px;
+  margin: 25px;
+  color: #ad1457;
+  font-size: 28px;
 }
 
 .contenedor-malla {
-  display: grid;
-  grid-template-columns: repeat(9, 1fr); /* 9 columnas */
-  gap: 15px;
-  padding: 20px 30px;
-  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
   overflow-x: auto;
 }
 
 .columna-semestre {
-  background-color: #ffe3ec;
+  background-color: #fde8f0;
+  border: 1px solid #f8bbd0;
   border-radius: 12px;
   padding: 10px;
+  min-width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 2px solid #f8bbd0;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
 }
 
 .columna-semestre h2 {
   font-size: 16px;
-  color: #880e4f;
-  background-color: #fce4ec;
-  border-radius: 8px;
-  padding: 8px 10px;
-  width: 100%;
-  margin-bottom: 10px;
+  color: #6a1b9a;
+  margin-bottom: 12px;
 }
 
 .ramo {
   background-color: #e1bee7;
   border: none;
   border-radius: 10px;
-  padding: 10px 8px;
-  margin: 4px 0;
-  width: 100%;
-  max-width: 180px;
+  padding: 10px;
+  margin: 5px 0;
+  width: 90%;
   font-weight: bold;
   color: #4a148c;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
   font-size: 14px;
 }
 
@@ -64,7 +59,7 @@ h1 {
 
 .ramo.aprobado {
   background-color: #8e24aa;
-  color: white;
+  color: #fff;
 }
 
 .ramo:disabled {
