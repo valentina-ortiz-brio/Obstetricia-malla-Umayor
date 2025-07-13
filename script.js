@@ -5,34 +5,33 @@ document.addEventListener("DOMContentLoaded", () => {
   ramos.forEach(ramo => {
     const codigo = ramo.dataset.codigo;
     const prerequisitos = ramo.dataset.prerrequisitos
-      ? ramo.dataset.prerrequisitos.split(" ")
+      ? ramo.dataset.prerrequisitos.split(" ").filter(p => p.trim())
       : [];
 
-    ramosMap[codigo] = {
-      boton: ramo,
-      prerequisitos,
-      aprobado: false
-    };
+    ramosMap[codigo] = { boton: ramo, prerequisitos, aprobado: false };
 
-    if (prerequisitos.length > 0) {
+    if (prerequisitos.length > 0 && !prerequisitos.includes("ALL")) {
       ramo.disabled = true;
     }
   });
+
+  const checkAllAprobados = () => {
+    return Object.values(ramosMap).every(r => r.aprobado);
+  };
 
   ramos.forEach(ramo => {
     ramo.addEventListener("click", () => {
       const codigo = ramo.dataset.codigo;
       const ramoData = ramosMap[codigo];
 
-      ramoData.aprobado = true;
       ramo.classList.add("aprobado");
       ramo.disabled = true;
+      ramoData.aprobado = true;
 
-      // Revisión de desbloqueos
       for (const [codigoDestino, destino] of Object.entries(ramosMap)) {
-        if (!destino.aprobado && destino.prerrequisitos.length > 0) {
-          const cumplidos = destino.prerrequisitos.every(c => ramosMap[c]?.aprobado);
-          if (cumplidos) {
+        if (!destino.aprobado) {
+          const cumplidos = destino.prerrequisitos.every(pr => ramosMap[pr]?.aprobado);
+          if (cumplidos || destino.prerrequisitos.includes("ALL") && checkAllAprobados()) {
             destino.boton.disabled = false;
           }
         }
