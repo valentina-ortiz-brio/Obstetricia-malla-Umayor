@@ -1,16 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
   const ramos = document.querySelectorAll(".ramo");
-
   const ramosMap = {};
+
+  // Recuperar aprobados del almacenamiento
+  const aprobadosGuardados = JSON.parse(localStorage.getItem("aprobados") || "[]");
+
   ramos.forEach(ramo => {
     const codigo = ramo.dataset.codigo;
     const prerequisitos = ramo.dataset.prerrequisitos
-      ? ramo.dataset.prerrequisitos.split(" ").filter(p => p.trim())
+      ? ramo.dataset.prerrequisitos.split(" ").filter(Boolean)
       : [];
 
-    ramosMap[codigo] = { boton: ramo, prerequisitos, aprobado: false };
+    const aprobado = aprobadosGuardados.includes(codigo);
+    ramosMap[codigo] = { boton: ramo, prerequisitos, aprobado };
 
-    if (prerequisitos.length > 0 && !prerequisitos.includes("ALL")) {
+    if (aprobado) {
+      ramo.classList.add("aprobado");
+      ramo.disabled = true;
+    } else if (prerequisitos.length > 0 && !prerequisitos.includes("ALL")) {
       ramo.disabled = true;
     }
   });
@@ -18,24 +25,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkAllAprobados = () =>
     Object.values(ramosMap).every(r => r.aprobado);
 
+  const actualizarDesbloqueos = () => {
+    for (const [codigo, data] of Object.entries(ramosMap)) {
+      if (!data.aprobado) {
+        const cumplidos = data.prerrequisitos.every(
+          pr => ramosMap[pr]?.aprobado
+        );
+        if (
+          cumplidos ||
+          (data.prerrequisitos.includes("ALL") && checkAllAprobados())
+        ) {
+          data.boton.disabled = false;
+        }
+      }
+    }
+  };
+
+  actualizarDesbloqueos();
+
   ramos.forEach(ramo => {
     ramo.addEventListener("click", () => {
       const codigo = ramo.dataset.codigo;
-      const ramoData = ramosMap[codigo];
+      const data = ramosMap[codigo];
 
-      ramo.classList.add("aprobado");
-      ramo.disabled = true;
-      ramoData.aprobado = true;
+      if (!data.aprobado) {
+        data.aprobado = true;
+        data.boton.classList.add("aprobado");
+        data.boton.disabled = true;
 
-      for (const [codigoDestino, destino] of Object.entries(ramosMap)) {
-        if (!destino.aprobado) {
-          const cumplidos = destino.prerrequisitos.every(
-            pr => ramosMap[pr]?.aprobado
-          );
-          if (cumplidos || destino.prerrequisitos.includes("ALL") && checkAllAprobados()) {
-            destino.boton.disabled = false;
-          }
-        }
+        const nuevosAprobados = Object.entries(ramosMap)
+          .filter(([, d]) => d.aprobado)
+          .map(([codigo]) => codigo);
+
+        localStorage.setItem("aprobados", JSON.stringify(nuevosAprobados));
+        actualizarDesbloqueos();
       }
     });
   });
