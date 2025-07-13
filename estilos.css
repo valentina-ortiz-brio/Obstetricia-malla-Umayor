@@ -2,9 +2,9 @@ body {
   background-color: #fff0f5;
   font-family: 'Segoe UI', sans-serif;
   color: #4a0c40;
+  text-align: center;
   margin: 0;
   padding: 0;
-  text-align: center;
 }
 
 h1 {
@@ -12,33 +12,40 @@ h1 {
   color: #880e4f;
 }
 
-.grid-malla {
-  display: grid;
-  grid-template-rows: repeat(10, auto);
-  gap: 15px;
-  padding: 20px;
-  max-width: 1400px;
-  margin: auto;
-}
-
-.semestre {
+.malla-grid {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 30px;
+  overflow-x: auto;
+}
+
+.semestre-col {
+  background-color: #fce4ec;
+  border: 2px solid #f8bbd0;
+  border-radius: 10px;
+  padding: 15px;
+  min-width: 200px;
+}
+
+.semestre-col h2 {
+  color: #6a1b9a;
+  font-size: 1.2em;
+  margin-bottom: 10px;
 }
 
 .ramo {
   background-color: #f8bbd0;
   border: none;
-  border-radius: 10px;
-  padding: 10px 14px;
-  width: 180px;
-  cursor: pointer;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 6px;
   font-weight: bold;
-  color: #6a1b9a;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-  transition: 0.3s;
+  color: #4a148c;
+  cursor: pointer;
+  width: 100%;
+  transition: 0.2s;
 }
 
 .ramo:hover {
@@ -46,7 +53,7 @@ h1 {
 }
 
 .ramo.aprobado {
-  background-color: #ad1457;
+  background-color: #ab47bc;
   color: white;
 }
 
