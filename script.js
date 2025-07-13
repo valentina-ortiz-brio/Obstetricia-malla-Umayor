@@ -1,76 +1,73 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const ramos = document.querySelectorAll(".ramo");
+  const botones = document.querySelectorAll(".ramo");
+
+  if (!botones.length) {
+    console.error("❌ No se encontraron botones con la clase .ramo");
+    return;
+  }
+
+  const aprobadosGuardados = JSON.parse(localStorage.getItem("aprobados") || "[]");
   const ramosMap = {};
 
-  // Recuperar desde localStorage
-  const aprobadosGuardados = JSON.parse(localStorage.getItem("aprobados") || "[]");
-
-  // Inicializar todos los ramos y sus relaciones
-  ramos.forEach(ramo => {
-    const codigo = ramo.dataset.codigo;
-    const prerequisitos = ramo.dataset.prerrequisitos
-      ? ramo.dataset.prerrequisitos.trim().split(" ").filter(Boolean)
+  botones.forEach(boton => {
+    const codigo = boton.dataset.codigo;
+    const prerequisitos = boton.dataset.prerrequisitos
+      ? boton.dataset.prerrequisitos.split(" ").filter(Boolean)
       : [];
 
     const aprobado = aprobadosGuardados.includes(codigo);
 
-    ramosMap[codigo] = {
-      boton: ramo,
-      prerequisitos,
-      aprobado
-    };
+    ramosMap[codigo] = { boton, prerequisitos, aprobado };
 
-    // Marcar como aprobado si está en storage
+    // Aplicar estado inicial
     if (aprobado) {
-      ramo.classList.add("aprobado");
-      ramo.disabled = true;
+      boton.classList.add("aprobado");
+      boton.disabled = true;
+    } else if (prerequisitos.length > 0 && !prerequisitos.includes("ALL")) {
+      boton.disabled = true;
     }
   });
 
-  // Verifica si todos los ramos están aprobados (para "ALL")
   const checkAllAprobados = () =>
     Object.values(ramosMap).every(r => r.aprobado);
 
-  // Habilita los ramos que cumplen sus prerequisitos
   const actualizarDesbloqueos = () => {
-    for (const [codigo, data] of Object.entries(ramosMap)) {
-      if (!data.aprobado) {
-        const cumplidos = data.prerrequisitos.every(pr =>
-          pr === "ALL" ? checkAllAprobados() : ramosMap[pr]?.aprobado
-        );
+    for (const [codigo, ramo] of Object.entries(ramosMap)) {
+      if (!ramo.aprobado) {
+        const requisitos = ramo.prerequisitos;
 
-        if (cumplidos) {
-          data.boton.disabled = false;
-        } else {
-          data.boton.disabled = true;
-        }
+        const desbloqueado = requisitos.length === 0 ||
+          requisitos.every(req => req === "ALL"
+            ? checkAllAprobados()
+            : ramosMap[req]?.aprobado);
+
+        ramo.boton.disabled = !desbloqueado;
       }
     }
   };
 
   actualizarDesbloqueos();
 
-  // Evento al hacer clic en un ramo
-  ramos.forEach(ramo => {
-    ramo.addEventListener("click", () => {
-      const codigo = ramo.dataset.codigo;
-      const data = ramosMap[codigo];
+  botones.forEach(boton => {
+    boton.addEventListener("click", () => {
+      const codigo = boton.dataset.codigo;
+      const ramo = ramosMap[codigo];
 
-      if (!data.aprobado) {
-        data.aprobado = true;
-        data.boton.classList.add("aprobado");
-        data.boton.disabled = true;
+      if (!ramo.aprobado) {
+        ramo.aprobado = true;
+        boton.classList.add("aprobado");
+        boton.disabled = true;
 
-        // Guardar en localStorage
         const nuevosAprobados = Object.entries(ramosMap)
           .filter(([, d]) => d.aprobado)
           .map(([codigo]) => codigo);
 
         localStorage.setItem("aprobados", JSON.stringify(nuevosAprobados));
 
-        // Actualizar siguientes desbloqueos
         actualizarDesbloqueos();
       }
     });
   });
+
+  console.log("✅ Script cargado correctamente y ramos inicializados");
 });
