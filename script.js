@@ -15,9 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const checkAllAprobados = () => {
-    return Object.values(ramosMap).every(r => r.aprobado);
-  };
+  const checkAllAprobados = () =>
+    Object.values(ramosMap).every(r => r.aprobado);
 
   ramos.forEach(ramo => {
     ramo.addEventListener("click", () => {
@@ -30,7 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       for (const [codigoDestino, destino] of Object.entries(ramosMap)) {
         if (!destino.aprobado) {
-          const cumplidos = destino.prerrequisitos.every(pr => ramosMap[pr]?.aprobado);
+          const cumplidos = destino.prerrequisitos.every(
+            pr => ramosMap[pr]?.aprobado
+          );
           if (cumplidos || destino.prerrequisitos.includes("ALL") && checkAllAprobados()) {
             destino.boton.disabled = false;
           }
