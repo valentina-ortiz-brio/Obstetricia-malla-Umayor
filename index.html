@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla Interactiva Obstetricia</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <h1>Malla Interactiva – Obstetricia y Puericultura</h1>
 
+  <div class="grid-malla">
+
+    <!-- SEMESTRES EN FORMATO VISUAL -->
+    <div class="semestre" style="grid-row: 1;">
+      <button class="ramo" data-codigo="MCST1007">Salud y Sociedad</button>
+      <button class="ramo" data-codigo="NANT1001">Anatomía Humana</button>
+      <button class="ramo" data-codigo="NPST1004">Psicología en el Curso de la Vida</button>
+      <button class="ramo" data-codigo="NQBT1004">Química y Bioquímica</button>
+      <button class="ramo" data-codigo="OPUB1021">Histoembriología</button>
+      <button class="ramo" data-codigo="OPUD1001">Fundamentos de la Matronería</button>
+    </div>
+
+    <div class="semestre" style="grid-row: 2;">
+      <button class="ramo" data-codigo="NCBT1008">Microbiología</button>
+      <button class="ramo" data-codigo="NPST1005" data-prerrequisitos="NPST1004">Psicología Atención Salud</button>
+      <button class="ramo" data-codigo="OPUD1002" data-prerrequisitos="NANT1001">Semiología General</button>
+      <button class="ramo" data-codigo="OPUD1003" data-prerrequisitos="NANT1001">Anatomía Ginecoobstetricia</button>
+      <button class="ramo" data-codigo="OPUD1004" data-prerrequisitos="NQBT1004 OPUB1021">Bases del Funcionamiento</button>
+      <button class="ramo" data-codigo="OPUL1001">Electivo 1</button>
+    </div>
+
+    <div class="semestre" style="grid-row: 3;">
+      <button class="ramo" data-codigo="OPUD1007" data-prerrequisitos="OPUD1003 OPUD1004">Obstetricia I</button>
+      <button class="ramo" data-codigo="MCST1006" data-prerrequisitos="OPUD1001 MCST1007">Salud Familiar y Comunitaria</button>
+      <button class="ramo" data-codigo="OPUD1005" data-prerrequisitos="OPUD1002">Cuidados Clínicos</button>
+      <button class="ramo" data-codigo="OPUD1008" data-prerrequisitos="OPUD1004">Neonatología I</button>
+      <button class="ramo" data-codigo="NSPT1002">Salud Pública</button>
+      <button class="ramo" data-codigo="OPUL1002">Electivo 2</button>
+    </div>
+
+    <div class="semestre" style="grid-row: 4;">
+      <button class="ramo" data-codigo="MCST1001">Bioética</button>
+      <button class="ramo" data-codigo="MCST1004">IA en Salud</button>
+      <button class="ramo" data-codigo="OPUD1009" data-prerrequisitos="NCBT1008 OPUD1004">Farmacología</button>
+      <button class="ramo" data-codigo="OPUD1010" data-prerrequisitos="NPST1005 OPUD1003">Sexualidad y Género</button>
+      <button class="ramo" data-codigo="OPUD1011" data-prerrequisitos="OPUD1005 OPUD1007">Obstetricia II</button>
+      <button class="ramo" data-codigo="OPUD1012" data-prerrequisitos="OPUD1005 OPUD1008">Neonatología II</button>
+    </div>
+
+    <div class="semestre" style="grid-row: 5;">
+      <button class="ramo" data-codigo="OPUD1014" data-prerrequisitos="MCST1006 OPUD1011 OPUD1012">Matronería Integrada I</button>
+      <button class="ramo" data-codigo="OPUD1015" data-prerrequisitos="OPUD1004 OPUD1010">Sexología</button>
+      <button class="ramo" data-codigo="OPUD1016" data-prerrequisitos="MCST1006 OPUD1009">Ginecología I</button>
+      <button class="ramo" data-codigo="OPUD1017" data-prerrequisitos="OPUD1009 OPUD1011">Obstetricia III</button>
+      <button class="ramo" data-codigo="OPUD1018" data-prerrequisitos="OPUD1009 OPUD1012">Neonatología III</button>
+    </div>
+
+    <div class="semestre" style="grid-row: 6;">
+      <button class="ramo" data-codigo="NMAT1004">Bioestadística</button>
+      <button class="ramo" data-codigo="OPUD1019" data-prerrequisitos="OPUD1015 OPUD1016">Regulación Fecundidad</button>
+      <button class="ramo" data-codigo="OPUD1020" data-prerrequisitos="OPUD1016">Ginecología II</button>
+      <button class="ramo" data-codigo="OPUL1003">Electivo 3</button>
+    </div>
+
+    <div class="semestre" style="grid-row: 7;">
+      <button class="ramo" data-codigo="NACT1002" data-prerrequisitos="NMAT1004">Métodos Investigación</button>
+      <button class="ramo" data-codigo="OPUD1021" data-prerrequisitos="OPUD1014 OPUD1017 OPUD1018 OPUD1019 OPUD1020">Matronería Integrada II</button>
+      <button class="ramo" data-codigo="OPUD1022">Gestión en Salud</button>
+      <button class="ramo" data-codigo="OPUD1023">Habilidades Profesionales</button>
+      <button class="ramo" data-codigo="OPUL1004">Electivo 4</button>
+    </div>
+
+    <div class="semestre" style="grid-row: 8;">
+      <button class="ramo" data-codigo="NEMT1004">Proyecto Emprendimiento</button>
+      <button class="ramo" data-codigo="OPUD1024" data-prerrequisitos="OPUD1022">Liderazgo en Salud</button>
+      <button class="ramo" data-codigo="OPUD1025" data-prerrequisitos="NACT1002">Proyecto Investigación</button>
+      <button class="ramo" data-codigo="OPUL1005">Electivo 5</button>
+    </div>
+
+    <div class="semestre" style="grid-row: 9;">
+      <button class="ramo" data-codigo="OPUD1026" data-prerrequisitos="ALL">Internado Neonatología</button>
+      <button class="ramo" data-codigo="OPUD1027" data-prerrequisitos="ALL">Internado Gineco-Obstetricia</button>
+      <button class="ramo" data-codigo="OPUD1028" data-prerrequisitos="ALL">Internado Salud Familiar</button>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
